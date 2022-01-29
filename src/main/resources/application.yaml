@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: Spring Batch
+  profiles:
+    active: local
+
+  batch:
+    job:
+      enabled: false    jdbc:      initialize-schema: always
+      
+  jpa:
+    hibernate.ddl-auto: update  sql:    init:      mode: always      platform: postgres
+    
+logging:
+  level:
+    ROOT: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/batch
+#    url: ${DB_URL}
+    username: postgres
+    password: postgres
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    url: ${DB_URL}
+    username: postgres
+    password: postgres
+
+---
+spring:
+  config:
+    activate:
+      on-profile: aws
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: postgres
+
